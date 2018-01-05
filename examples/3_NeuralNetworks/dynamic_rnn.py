@@ -12,7 +12,7 @@ Project: https://github.com/aymericdamien/TensorFlow-Examples/
 from __future__ import print_function
 
 import tensorflow as tf
-import random
+import random_example
 
 
 # ====================
@@ -22,7 +22,7 @@ class ToySequenceData(object):
     """ Generate sequence of data with dynamic length.
     This class generate samples for training:
     - Class 0: linear sequences (i.e. [0, 1, 2, 3,...])
-    - Class 1: random sequences (i.e. [1, 3, 10, 7,...])
+    - Class 1: random_example sequences (i.e. [1, 3, 10, 7,...])
 
     NOTICE:
     We have to pad each sequence to reach 'max_seq_len' for TensorFlow
@@ -37,13 +37,13 @@ class ToySequenceData(object):
         self.seqlen = []
         for i in range(n_samples):
             # Random sequence length
-            len = random.randint(min_seq_len, max_seq_len)
+            len = random_example.randint(min_seq_len, max_seq_len)
             # Monitor sequence length for TensorFlow dynamic calculation
             self.seqlen.append(len)
-            # Add a random or linear int sequence (50% prob)
-            if random.random() < .5:
+            # Add a random_example or linear int sequence (50% prob)
+            if random_example.random() < .5:
                 # Generate a linear sequence
-                rand_start = random.randint(0, max_value - len)
+                rand_start = random_example.randint(0, max_value - len)
                 s = [[float(i)/max_value] for i in
                      range(rand_start, rand_start + len)]
                 # Pad sequence for dimension consistency
@@ -51,8 +51,8 @@ class ToySequenceData(object):
                 self.data.append(s)
                 self.labels.append([1., 0.])
             else:
-                # Generate a random sequence
-                s = [[float(random.randint(0, max_value))/max_value]
+                # Generate a random_example sequence
+                s = [[float(random_example.randint(0, max_value)) / max_value]
                      for i in range(len)]
                 # Pad sequence for dimension consistency
                 s += [[0.] for i in range(max_seq_len - len)]
